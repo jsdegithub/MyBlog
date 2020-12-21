@@ -28,20 +28,23 @@ const handleBlogRouter = (req, res) => {
         });
     }
     if (method === "POST" && req.path === "/api/blog/update") {
-        const res = updateBlog(id, req.body);
-        if (res) {
-            return new SuccessModel("更新博客成功");
-        } else {
-            return new ErrorModel("更新博客失败");
-        }
+        return updateBlog(id, req.body).then((res) => {
+            if (res) {
+                return new SuccessModel("更新成功");
+            } else {
+                return new ErrorModel("更新失败");
+            }
+        });
     }
     if (method === "POST" && req.path === "/api/blog/del") {
-        const res = delBlog(id);
-        if (res) {
-            return new SuccessModel("删除博客成功");
-        } else {
-            return new ErrorModel("删除博客失败");
-        }
+        const author = "jinshuo";
+        return delBlog(id, author).then((res) => {
+            if (res) {
+                return new SuccessModel("删除成功");
+            } else {
+                return new ErrorModel("删除失败");
+            }
+        });
     }
 };
 
