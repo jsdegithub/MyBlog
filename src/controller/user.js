@@ -1,9 +1,11 @@
+const { exec } = require("../db/mysql");
+
 const login = (username, password) => {
-    if (username === "jinshuo" && password === "123") {
-        return true;
-    } else {
-        return false;
-    }
+    const sql = `select username, realname from users 
+    where username='${username}' and pwd='${password}'`;
+    return exec(sql).then((rows) => {
+        return rows[0] || {};
+    });
 };
 
 module.exports = {
