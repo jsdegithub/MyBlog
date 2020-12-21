@@ -8,20 +8,24 @@ const handleBlogRouter = (req, res) => {
     if (method === "GET" && req.path === "/api/blog/list") {
         const author = req.query.author || "";
         const keyword = req.query.keyword || "";
-        return getList(author, keyword).then((res) => {
-            return new SuccessModel(res);
-        }).catch(err=>{
-            return new ErrorModel(err);
-        });
+        return getList(author, keyword)
+            .then((res) => {
+                return new SuccessModel(res);
+            })
+            .catch((err) => {
+                return new ErrorModel(err);
+            });
     }
     if (method === "GET" && req.path === "/api/blog/detail") {
-        const id = req.query.id;
-        const detail = getDetail(id);
-        return new SuccessModel(detail);
+        return getDetail(id).then((detail) => {
+            return new SuccessModel(detail);
+        });
     }
     if (method === "POST" && req.path === "/api/blog/new") {
-        const new_blog = newBlog(req.body);
-        return new SuccessModel(new_blog);
+        req.body.author = "jinshuo";
+        return newBlog(req.body).then((res) => {
+            return new SuccessModel(res);
+        });
     }
     if (method === "POST" && req.path === "/api/blog/update") {
         const res = updateBlog(id, req.body);
