@@ -33,6 +33,16 @@ const serverHandler = (req, res) => {
     const path = url.split("?")[0];
     req.path = path;
     req.query = querystring.parse(url.split("?")[1]);
+    // 解析cookie
+    req.cookie = {};
+    const cookieStr = req.headers.cookie || "";
+    cookieStr.split("; ").forEach((item) => {
+        if (!item) {
+            return;
+        }
+        var tempArr = item.split("=");
+        req.cookie[tempArr[0]] = tempArr[1];
+    });
     getPostData(req).then((postData) => {
         req.body = postData;
         const blogResult = handleBlogRouter(req, res);
