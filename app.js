@@ -66,6 +66,8 @@ const serverHandler = (req, res) => {
         userId = `${Date.now()}_${Math.random()}`;
         SESSION_DATA[userId] = {};
     }
+    //利用全局变量记录session，再次发起url请求时，全局变量
+    //SESSION_DATA不会丢失，它记录着当前的登陆状态
     req.session = SESSION_DATA[userId];
 
     getPostData(req).then((postData) => {

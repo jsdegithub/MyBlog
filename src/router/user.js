@@ -26,7 +26,7 @@ const handleUserRouter = (req, res) => {
         });
     }
 
-    // 测试cookie
+    // 使用query传参登录（验证cookie）
     if (method === "GET" && req.path === "/api/user/login") {
         const { username, password } = req.query;
         return login(username, password).then((data) => {
