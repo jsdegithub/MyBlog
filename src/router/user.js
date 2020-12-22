@@ -10,15 +10,15 @@ const handleUserRouter = (req, res) => {
         d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
         return d.toGMTString();
     };
+
+    // 登录
     if (method === "POST" && req.path === "/api/user/login") {
         const username = req.body["username"];
         const password = req.body["password"];
         return login(username, password).then((data) => {
             if (data.username) {
-                res.setHeader(
-                    "Set-Cookie",
-                    `username=${username}; path=/; httpOnly; expires=${getCookieExpires()}`
-                );
+                req.session.username = data.username;
+                req.session.realname = data.realname;
                 return new SuccessModel("登录成功");
             } else {
                 return new ErrorModel("登陆失败");
@@ -31,10 +31,8 @@ const handleUserRouter = (req, res) => {
         const { username, password } = req.query;
         return login(username, password).then((data) => {
             if (data.username) {
-                res.setHeader(
-                    "Set-Cookie",
-                    `username=${username}; path=/; httpOnly; expires=${getCookieExpires()}`
-                );
+                req.session.username = data.username;
+                req.session.realname = data.realname;
                 return new SuccessModel("登录成功");
             } else {
                 return new ErrorModel("登陆失败");
@@ -44,10 +42,10 @@ const handleUserRouter = (req, res) => {
 
     // 登录验证测试路由
     if (method === "GET" && req.path === "/api/user/login-test") {
-        if (req.cookie.username) {
+        if (req.session.username) {
             return Promise.resolve(
                 new SuccessModel({
-                    username: req.cookie.username,
+                    session: req.session,
                 })
             );
         } else {
