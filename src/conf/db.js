@@ -1,6 +1,8 @@
 const env = process.env.NODE_ENV;
 
 var MYSQL_CONF;
+var REDIS_CONF;
+
 if (env === "dev") {
     MYSQL_CONF = {
         host: "localhost",
@@ -8,6 +10,10 @@ if (env === "dev") {
         password: "root",
         port: "3306",
         database: "myblog",
+    };
+    REDIS_CONF = {
+        host: "127.0.0.1",
+        port: 6379,
     };
 }
 if (env === "prod") {
@@ -18,8 +24,13 @@ if (env === "prod") {
         port: "3306",
         database: "myblog",
     };
+    REDIS_CONF = {
+        host: "127.0.0.1",
+        port: 6379,
+    };
 }
 
 module.exports = {
     MYSQL_CONF,
+    REDIS_CONF,
 };
