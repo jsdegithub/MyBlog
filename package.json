@@ -21,7 +21,8 @@
   "dependencies": {
     "axios": "^0.21.0",
     "mysql": "^2.18.1",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "cross-env": "^5.2.0"
