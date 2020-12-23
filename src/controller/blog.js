@@ -1,4 +1,4 @@
-const { exec } = require("../db/mysql");
+const { exec, escape } = require("../db/mysql");
 
 const getList = (author, keyword) => {
     var sql = `select * from blogs where state=1 `;
@@ -20,12 +20,12 @@ const getDetail = (id) => {
 };
 
 const newBlog = (blogData = {}) => {
-    const title = blogData.title;
-    const content = blogData.content;
-    const author = blogData.author;
+    const title = escape(blogData.title);
+    const content = escape(blogData.content);
+    const author = escape(blogData.author);
     const createtime = Date.now();
     const sql = `insert into blogs (title, content, author, createtime) 
-    values ('${title}', '${content}', '${author}', '${createtime}')`;
+    values (${title}, ${content}, ${author}, '${createtime}')`;
     return exec(sql).then((insertData) => {
         return {
             id: insertData.insertId,
@@ -34,9 +34,9 @@ const newBlog = (blogData = {}) => {
 };
 
 const updateBlog = (id, blogData = {}) => {
-    const title = blogData.title;
-    const content = blogData.content;
-    const sql = `update blogs set title='${title}', content='${content}' where id=${id}`;
+    const title = escape(blogData.title);
+    const content = escape(blogData.content);
+    const sql = `update blogs set title=${title}, content=${content} where id=${id}`;
     return exec(sql).then((updateData) => {
         if (updateData.affectedRows > 0) {
             return true;
