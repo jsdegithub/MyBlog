@@ -26,7 +26,7 @@ const getPostData = (req) => {
         }
         var postData = "";
         req.on("data", (chunk) => {
-            postData += chunk.toString();
+            postData += chunk.toString();  //将二进制数据流转换为字符串
         });
         req.on("end", () => {
             if (!postData) {
