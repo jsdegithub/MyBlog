@@ -19,7 +19,7 @@ const handleBlogRouter = (req, res) => {
             if (loginCheckResult) {
                 return loginCheckResult;
             }
-            author = req.session.username;
+            author = req.session.username;  //强制访问自己的博客列表
         }
         return getList(author, keyword)
             .then((res) => {
