@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>xss攻击</title>
+        <style>
+            .display {
+                width: 300px;
+                height: 200px;
+                border: 2px solid lightblue;
+            }
+        </style>
+    </head>
+    <body>
+        <input type="text" />
+        <button>提交</button>
+        <div class="display">
+            <!-- <script>alert(sessionStorage.getItem("test_for_xss"));</script> -->
+        </div>
+        <script>
+            var input = document.getElementsByTagName("input")[0];
+            var btn = document.getElementsByTagName("button")[0];
+            var div = document.getElementsByTagName("div")[0];
+            btn.onclick = function () {
+                div.innerText = input.value;
+            };
+        </script>
+
+        
+    </body>
+</html>
