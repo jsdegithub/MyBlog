@@ -1,2 +1,2 @@
 # MyBlog
-#### 基于原生nodejs
+#### 基于nodejs
